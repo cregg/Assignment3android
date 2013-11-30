@@ -12,6 +12,7 @@
         android:id="@+id/signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="@string/sign_in"
         android:layout_centerHorizontal="true"
         />
@@ -32,5 +33,18 @@
         android:hint="@string/password"
         android:layout_centerHorizontal="true"
         android:inputType="textPassword"/>
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordentry"
+        android:text="@string/login"/>
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_button"
+        android:text="@string/register"/>
+    
 
 </RelativeLayout>

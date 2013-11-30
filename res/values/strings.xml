@@ -15,5 +15,6 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="student_number">Student Number</string>
+    <string name="login">Login</string>
 
 </resources>
