@@ -9,8 +9,74 @@
     tools:context=".Register" >
 
     <TextView
+        android:id="@+id/signin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_marginTop="60dp"
+        android:text="@string/fill_in_register"
+        android:layout_centerHorizontal="true"
+        />
+    <EditText
+        android:id="@+id/username_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:hint="@string/username"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/signin"
+        android:layout_centerHorizontal="true"
+        android:inputType="text"/>
+    
+    <EditText 
+        android:id="@+id/password_entry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/username_entry"
+        android:hint="@string/password"
+        android:inputType="textPassword"/>
+    
+    <EditText 
+        android:id="@+id/passwordconfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/password_entry"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"/>
+    
+    <EditText 
+        android:id="@+id/first_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/passwordconfirm"
+        android:hint="@string/first_name"
+        android:inputType="text"/>
+    
+    <EditText 
+        android:id="@+id/last_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/first_name"
+        android:hint="@string/last_name"
+        android:inputType="text"/>
 
+    <EditText 
+        android:id="@+id/student_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/last_name"
+        android:hint="@string/student_number"
+        android:inputType="text"/>
+    
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/student_number"
+        android:text="@string/submit"/>
+    
 </RelativeLayout>

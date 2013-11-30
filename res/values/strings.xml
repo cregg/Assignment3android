@@ -16,5 +16,6 @@
     <string name="last_name">Last Name</string>
     <string name="student_number">Student Number</string>
     <string name="login">Login</string>
+    <string name="fill_in_register">Please complete the fields below below</string>
 
 </resources>
