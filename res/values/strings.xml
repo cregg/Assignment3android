@@ -6,6 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_register">Register</string>
     <string name="title_activity_login">Login</string>
+    <string name="sign_in">Please Sign In</string>
     <string name="username">User Name</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
