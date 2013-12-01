@@ -27,6 +27,7 @@ public class LoginActivity extends Activity {
 	private EditText usernameEdit;
 	private EditText passwordEdit;
 	private Button Btnlogin;
+	private Button Btnregister;
 	
     private static String url = "http://a3-comp3910.rhcloud.com/application/users/userlogin";
     
@@ -50,13 +51,24 @@ public class LoginActivity extends Activity {
         	@Override
         	public void onClick(View view) {
         		System.out.println("click");
-        		new JSONParse().execute();
+        		new UserLogin().execute();
+        	}
+        });
+        
+        Btnregister = (Button) findViewById(R.id.register_button);
+        Btnregister.setOnClickListener(new View.OnClickListener() {
+        	
+        	@Override
+        	public void onClick(View view) {
+        		System.out.println("clickregister");
+        		Intent in = new Intent(getApplicationContext(), RegisterActivity.class);
+        		startActivity(in);
         	}
         });
 
     }
     
-    private class JSONParse extends AsyncTask<String, String, HttpResponse> {
+    private class UserLogin extends AsyncTask<String, String, HttpResponse> {
         private ProgressDialog pDialog;
        @Override
        protected void onPreExecute() {

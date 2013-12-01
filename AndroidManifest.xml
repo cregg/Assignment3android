@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.assignment3.Register"
+            android:name="com.example.assignment3.RegisterActivity"
             android:label="@string/title_activity_register" >
         </activity>
         <activity
