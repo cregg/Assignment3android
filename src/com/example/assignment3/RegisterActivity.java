@@ -71,7 +71,7 @@ public class RegisterActivity extends Activity {
        protected void onPreExecute() {
            super.onPreExecute();
            usernameEdit = (EditText) findViewById(R.id.username_entry);
-           passwordEdit = (EditText) findViewById(R.id.passwordentry);    
+           passwordEdit = (EditText) findViewById(R.id.password_entry);    
            passwordConfirmEdit = (EditText) findViewById(R.id.passwordconfirm);
            firstNameEdit = (EditText) findViewById(R.id.first_name);
            lastNameEdit = (EditText) findViewById(R.id.last_name);
@@ -89,7 +89,6 @@ public class RegisterActivity extends Activity {
        protected HttpResponse doInBackground(String... args) {
 
 			HttpClient httpClient = new DefaultHttpClient();
-			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 10000);
 			HttpResponse response;
 			JSONObject json = new JSONObject();
 
@@ -100,6 +99,7 @@ public class RegisterActivity extends Activity {
 				json.put(TAG_FIRST, firstNameEdit.getText());
 				json.put(TAG_LAST, lastNameEdit.getText());
 				json.put(TAG_STUDENT_NUMBER, studentNumberEdit.getText());
+				System.out.println("not null");
 				StringEntity se = new StringEntity(json.toString());
 				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
 						"application/json"));
