@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="ourTheme" parent="android:Theme.Holo">
+
+    <item name="android:editTextBackground">@drawable/ourtheme_edit_text_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorMultiple">@drawable/ourtheme_btn_check_holo_dark</item>
+
+    <item name="android:listChoiceIndicatorSingle">@drawable/ourtheme_btn_radio_holo_dark</item>
+
+    <item name="android:buttonStyle">@style/ButtonourTheme</item>
+
+    <item name="android:imageButtonStyle">@style/ImageButtonourTheme</item>
+
+    <item name="android:dropDownSpinnerStyle">@style/SpinnerourTheme</item>
+
+    <item name="android:buttonStyleToggle">@style/ToggleourTheme</item>
+
+    <item name="android:listChoiceBackgroundIndicator">@drawable/ourtheme_list_selector_holo_dark</item>
+
+    <item name="android:activatedBackgroundIndicator">@drawable/ourtheme_activated_background_holo_dark</item>
+
+    <item name="android:fastScrollThumbDrawable">@drawable/ourtheme_fastscroll_thumb_holo</item>
+
+  </style>
+
+</resources>

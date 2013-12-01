@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <style name="EditTextourTheme" parent="android:Widget.EditText">
+	  <item name="android:background">@drawable/ourtheme_edit_text_holo_dark</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="CheckBoxourTheme" parent="android:Widget.CompoundButton.CheckBox">
+      <item name="android:button">@drawable/ourtheme_btn_check_holo_dark</item>
+  </style>
+
+  <style name="RadioButtonourTheme" parent="android:Widget.CompoundButton.RadioButton">
+      <item name="android:button">@drawable/ourtheme_btn_radio_holo_dark</item>
+  </style>
+
+  <style name="ButtonourTheme" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/ourtheme_btn_default_holo_dark</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="ImageButtonourTheme" parent="android:Widget.ImageButton">
+	  <item name="android:background">@drawable/ourtheme_btn_default_holo_dark</item>
+  </style>
+
+  <style name="SpinnerourTheme" parent="android:Widget.Spinner">
+      <item name="android:background">@drawable/ourtheme_spinner_background_holo_dark</item>
+      <item name="android:dropDownSelector">@drawable/ourtheme_list_selector_holo_dark</item>
+  </style>
+
+  <style name="SpinnerDropDownItemourTheme" parent="android:Widget.DropDownItem.Spinner">
+      <item name="android:checkMark">@drawable/ourtheme_btn_radio_holo_dark</item>
+  </style>
+  <style name="ToggleourTheme" parent="android:Widget.Button.Toggle">
+      <item name="android:background">@drawable/ourtheme_btn_toggle_holo_dark</item>
+      <item name="android:minHeight">48dip</item>
+	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="ListViewourTheme" parent="android:Widget.ListView">
+      <item name="android:listSelector">@drawable/ourtheme_list_selector_holo_dark</item>
+  </style>
+
+  <style name="ListViewourTheme.White" parent="android:Widget.ListView.White">
+      <item name="android:listSelector">@drawable/ourtheme_list_selector_holo_dark</item>
+  </style>
+
+  <style name="SpinnerItemourTheme" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+      <item name="android:textColor">#ffffff</item>
+  </style>
+
+</resources>
