@@ -34,6 +34,10 @@
             android:name="com.example.assignment3.ListQuestions"
             android:label="@string/title_activity_list_questions" >
         </activity>
+        <activity
+            android:name="com.example.assignment3.ViewScore"
+            android:label="@string/title_activity_view_score" >
+        </activity>
     </application>
 
 </manifest>

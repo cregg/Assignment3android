@@ -16,7 +16,9 @@
     <string name="last_name">Last Name</string>
     <string name="student_number">Student Number</string>
     <string name="login">Login</string>
-    <string name="fill_in_register">Please complete the fields below below</string>
+    <string name="fill_in_register">Please complete the fields below</string>
     <string name="title_activity_list_questions">ListQuestions</string>
-
+    <string name="title_activity_view_score">ViewScore</string>
+	<string name="score">Score:</string>
+	<string name="average">Average:</string>
 </resources>
