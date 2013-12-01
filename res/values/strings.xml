@@ -17,5 +17,6 @@
     <string name="student_number">Student Number</string>
     <string name="login">Login</string>
     <string name="fill_in_register">Please complete the fields below below</string>
+    <string name="title_activity_list_questions">ListQuestions</string>
 
 </resources>
