@@ -34,7 +34,12 @@
             android:name="com.example.assignment3.ViewScore"
             android:label="@string/title_activity_view_score" >
         </activity>
+        <activity
+            android:name="com.example.assignment3.ListQuizes"
+            android:label="@string/title_activity_list_quizes" >
+        </activity>
     </application>
+
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
