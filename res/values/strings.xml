@@ -19,6 +19,22 @@
     <string name="fill_in_register">Please complete the fields below</string>
     <string name="title_activity_list_questions">ListQuestions</string>
     <string name="title_activity_view_score">ViewScore</string>
-	<string name="score">Score:</string>
-	<string name="average">Average:</string>
+    <string name="score">Score:</string>
+    <string name="average">Average:</string>
+    <string name="title_activity_quiz_list">QuizList</string>
+    <string name="week1">Week 1</string>
+    <string name="week2">Week 2</string>
+    <string name="week3">Week 3</string>
+    <string name="week4">Week 4</string>
+    <string name="week5">Week 5</string>
+    <string name="week6">Week 6</string>
+    <string name="week7">Week 7</string>
+    <string name="week8">Week 8</string>
+    <string name="week9">Week 9</string>
+    <string name="week10">Week 10</string>
+    <string name="week11">Week 11</string>
+    <string name="week12">Week 12</string>
+    <string name="week13">Week 13</string>
+    <string name="week14">Week 14</string>
+
 </resources>
