@@ -95,6 +95,7 @@ public class LoginActivity extends Activity {
             pDialog.dismiss();
            // Getting JSON Array from URL
 			try {
+				System.out.println("in post execute");
 				System.out.println(response);
 				Intent in = new Intent(getApplicationContext(), ListQuestionsActivity.class);
 				startActivity(in);
