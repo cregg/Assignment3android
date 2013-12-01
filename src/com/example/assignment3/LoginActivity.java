@@ -10,7 +10,9 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	
@@ -29,6 +32,7 @@ public class LoginActivity extends Activity {
     
     public final static String TAG_NAME = "userName";
     public final static String TAG_PASSWORD = "password";
+    public final static String TAG_TOKEN = "token";
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class LoginActivity extends Activity {
 
     }
     
-    private class JSONParse extends AsyncTask<String, String, String> {
+    private class JSONParse extends AsyncTask<String, String, HttpResponse> {
         private ProgressDialog pDialog;
        @Override
        protected void onPreExecute() {
@@ -68,7 +72,7 @@ public class LoginActivity extends Activity {
        }
 
        @Override
-       protected String doInBackground(String... args) {
+       protected HttpResponse doInBackground(String... args) {
 
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 10000);
@@ -83,22 +87,25 @@ public class LoginActivity extends Activity {
 				System.out.println(newurl);
 				HttpGet httpget = new HttpGet(newurl);
 				response = httpClient.execute(httpget);
-				String responseStr = EntityUtils.toString(response.getEntity());
-				return responseStr;
+				return response;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
        }
         @Override
-        protected void onPostExecute(String response) {
+        protected void onPostExecute(HttpResponse response) {
             pDialog.dismiss();
            // Getting JSON Array from URL
 			try {
-				System.out.println("in post execute");
-				System.out.println(response);
-				Intent in = new Intent(getApplicationContext(), ListQuestionsActivity.class);
-				startActivity(in);
+				if(response.getStatusLine().getStatusCode() == 200) {
+					String responseStr = EntityUtils.toString(response.getEntity());
+					Intent in = new Intent(getApplicationContext(), ListQuestionsActivity.class);
+					in.putExtra(TAG_TOKEN, responseStr);
+					startActivity(in);
+				} else {
+					Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
