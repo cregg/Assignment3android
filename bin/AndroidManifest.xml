@@ -35,7 +35,6 @@
             android:label="@string/title_activity_view_score" >
         </activity>
     </application>
-                  
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

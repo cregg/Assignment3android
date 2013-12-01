@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
 	private EditText passwordEdit;
 	private Button Btnlogin;
 	
-    private static String url = "http://a3-comp3910.rhcloud.com/application/userlogin";
+    private static String url = "http://a3-comp3910.rhcloud.com/application/users/userlogin";
     
     public final static String TAG_NAME = "userName";
     public final static String TAG_PASSWORD = "password";
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
 
     }
     
-    private class JSONParse extends AsyncTask<String, String, HttpResponse> {
+    private class JSONParse extends AsyncTask<String, String, String> {
         private ProgressDialog pDialog;
        @Override
        protected void onPreExecute() {
@@ -68,7 +68,7 @@ public class LoginActivity extends Activity {
        }
 
        @Override
-       protected HttpResponse doInBackground(String... args) {
+       protected String doInBackground(String... args) {
 
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpConnectionParams.setConnectionTimeout(httpClient.getParams(), 10000);
@@ -80,20 +80,22 @@ public class LoginActivity extends Activity {
 	           String password = URLEncoder.encode(passwordEdit.getText().toString(), "UTF-8");    
 	           
 				String newurl = url + "?username="+username+"&password="+password;
+				System.out.println(newurl);
 				HttpGet httpget = new HttpGet(newurl);
 				response = httpClient.execute(httpget);
-				return response;
+				String responseStr = EntityUtils.toString(response.getEntity());
+				return responseStr;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
        }
         @Override
-        protected void onPostExecute(HttpResponse response) {
+        protected void onPostExecute(String response) {
             pDialog.dismiss();
            // Getting JSON Array from URL
 			try {
-				String responseStr = EntityUtils.toString(response.getEntity());
+				System.out.println(response);
 				Intent in = new Intent(getApplicationContext(), ListQuestionsActivity.class);
 				startActivity(in);
 			} catch (Exception e) {
