@@ -25,26 +25,10 @@ import android.widget.TextView;
 public class ListQuizzesActivity extends Activity {
 	ListView list;
 	private String week;
-	private String weekNo;
-	private String quizID;
 	private ViewGroup buttons;
 	ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
 
 	private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
-
-	private static final String TAG_QUIZ = "quiz";
-	private static final String TAG_QUIZID = "quizID";
-	private static final String TAG_WEEKNO = "weekNo";
-	private static final String TAG_QUESTIONS = "questions";
-	private static final String TAG_ANSWERS = "answers";
-	private static final String TAG_ANSWERID = "answerID";
-	private static final String TAG_ANSWER = "answer";
-	private static final String TAG_ANSWER1 = "answer1";
-	private static final String TAG_ANSWER2 = "answer2";
-	private static final String TAG_ANSWER3 = "answer3";
-	private static final String TAG_ANSWER4 = "answer4";
-	private static final String TAG_QUESTIONID = "questionID";
-	private static final String TAG_QUESTION = "question";
 
 	JSONArray android = null;
 
@@ -58,7 +42,7 @@ public class ListQuizzesActivity extends Activity {
 
 		for (int i = 0; i < buttons.getChildCount() - 1; i++) {
 			Button selectedButton = (Button) buttons.getChildAt(i);
-			week = selectedButton.toString().substring(4);
+			week = selectedButton.getText().toString().substring(4);
 			selectedButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {

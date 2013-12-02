@@ -44,13 +44,14 @@ public class ListQuestionsActivity extends Activity {
 	private static final String TAG_QUESTION = "question";
 	
 	JSONArray android = null;
+	JSONObject json;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_questions);
         try {
-        JSONObject json = new JSONObject(getIntent().getStringExtra("jsonObject"));
+        json = new JSONObject(getIntent().getStringExtra("jsonObject"));
         populateView(json);
         } catch(Exception e) {
         	e.printStackTrace();
@@ -132,15 +133,34 @@ public class ListQuestionsActivity extends Activity {
 
     private class SubmitAnswer extends AsyncTask<String, String, JSONObject> {
         private ProgressDialog pDialog;
+        private JSONObject j;
+        private JSONObject temp;
+        private JSONArray n;
+        private ListView v;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(ListQuestionsActivity.this);
-            pDialog.setMessage("Computing Scores ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
+            try {
+            	v = (ListView) findViewById(R.id.list);
+            	j = new JSONObject();
+            	temp = new JSONObject();
+	            temp.put(TAG_QUIZID, quizID);
+	            temp.put(TAG_WEEKNO, weekNo);
+	            j.put(TAG_QUIZ, temp);
+	            
+	            n = new JSONArray();
+	            temp = new JSONObject();
+	            
+	            
+	            pDialog = new ProgressDialog(ListQuestionsActivity.this);
+	            pDialog.setMessage("Computing Scores ...");
+	            pDialog.setIndeterminate(false);
+	            pDialog.setCancelable(true);
+	            pDialog.show();
+            } catch(Exception e) {
+            	e.printStackTrace();
+            }
 
         }
 
