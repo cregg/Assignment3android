@@ -2,7 +2,17 @@ package com.example.assignment3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +31,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class ListQuestionsActivity extends Activity {
     private ProgressDialog pDialog;
@@ -31,6 +42,9 @@ public class ListQuestionsActivity extends Activity {
     private ViewGroup buttons;
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
+    HashMap<String, String> answerMap = new HashMap<String, String>();
+    
+	private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
 
     private static final String TAG_QUIZ = "quiz";
     private static final String TAG_QUIZID = "quizID";
@@ -66,6 +80,9 @@ public class ListQuestionsActivity extends Activity {
          * This gets the id of the checked radio button and then grabs the radio
          * button. I don't know what you plan to do with it after.
          */
+
+        System.out.println(list.getChildCount());
+        /*
         for (int i = 0; i < list.getChildCount(); i++) {
             if (list.getChildAt(i) instanceof RadioGroup) {
                 tyorke = (RadioGroup) list.getChildAt(i);
@@ -73,7 +90,7 @@ public class ListQuestionsActivity extends Activity {
                 RadioButton rb = (RadioButton) findViewById(id);
             }
         }
-
+	*/
         submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -145,27 +162,13 @@ public class ListQuestionsActivity extends Activity {
         return true;
     }
 
-    private class SubmitAnswer extends AsyncTask<String, String, JSONObject> {
+    private class SubmitAnswer extends AsyncTask<String, String, HttpResponse> {
         private ProgressDialog pDialog;
-        private JSONObject j;
-        private JSONObject temp;
-        private JSONArray n;
-        private ListView v;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             try {
-                v = (ListView) findViewById(R.id.list);
-                j = new JSONObject();
-                temp = new JSONObject();
-                temp.put(TAG_QUIZID, quizID);
-                temp.put(TAG_WEEKNO, weekNo);
-                j.put(TAG_QUIZ, temp);
-
-                n = new JSONArray();
-                temp = new JSONObject();
-
                 pDialog = new ProgressDialog(ListQuestionsActivity.this);
                 pDialog.setMessage("Computing Scores ...");
                 pDialog.setIndeterminate(false);
@@ -178,20 +181,59 @@ public class ListQuestionsActivity extends Activity {
         }
 
         @Override
-        protected JSONObject doInBackground(String... args) {
-            // JSONParser parser = new JSONParser();
-            // String newUrl = url + week;
-            JSONObject json = null; // parser.getJSONFromUrl(newUrl);
-            return json;
+        protected HttpResponse doInBackground(String... args) {
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response;
+			JSONObject json = new JSONObject();
+	        JSONObject temp;
+	        JSONArray n;
+
+			try {
+				HttpPost httpPost = new HttpPost(url);
+	                temp = new JSONObject();
+	                n = new JSONArray();
+	                temp = new JSONObject();
+	                temp.put(TAG_QUIZID, quizID);
+	                temp.put(TAG_WEEKNO, weekNo);
+	              
+	                json.put(TAG_QUIZ, temp);
+	                
+	                Iterator it = answerMap.entrySet().iterator();
+	                while(it.hasNext()) {
+	                	Map.Entry pairs = (Map.Entry)it.next();
+	                	temp.put(TAG_QUESTION, pairs.getKey());
+	                	temp.put(TAG_ANSWER, pairs.getValue());
+	                	n.put(temp);
+	                }
+	                json.put(TAG_ANSWERS, n);
+				StringEntity se = new StringEntity(json.toString());
+				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+						"application/json"));
+				httpPost.setEntity(se);
+				response = httpClient.execute(httpPost);
+				return response;
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return null;
 
         }
 
         @Override
-        protected void onPostExecute(JSONObject json) {
+        protected void onPostExecute(HttpResponse response) {
             pDialog.dismiss();
             try {
-                Intent in = new Intent(getApplicationContext(), ViewScore.class);
-                startActivity(in);
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    String responseStr = EntityUtils.toString(response
+                            .getEntity());
+                    Intent in = new Intent(getApplicationContext(),
+                            ViewScoreActivity.class);
+                    in.putExtra(TAG_TOKEN, responseStr);
+                    startActivity(in);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error",
+                            Toast.LENGTH_SHORT).show();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
