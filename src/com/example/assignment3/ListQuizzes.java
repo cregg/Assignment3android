@@ -52,7 +52,7 @@ public class ListQuizzes extends Activity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(ListQuizzes.this);
-            pDialog.setMessage("Checking login ...");
+            pDialog.setMessage("Retrieving Quiz ...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
