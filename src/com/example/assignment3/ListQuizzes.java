@@ -1,42 +1,37 @@
 package com.example.assignment3;
 
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 public class ListQuizzes extends Activity {
+    private String week;
+    private ViewGroup buttons;
+    private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_quizes);
+        Button firstButton = (Button) findViewById(R.id.quiz1);
 
-        Button[] btns = new Button[14];
+        buttons = (ViewGroup) firstButton.getParent();
 
-        btns[0] = (Button) findViewById(R.id.quiz1);
-        btns[1] = (Button) findViewById(R.id.quiz2);
-        btns[2] = (Button) findViewById(R.id.quiz3);
-        btns[3] = (Button) findViewById(R.id.quiz4);
-        btns[4] = (Button) findViewById(R.id.quiz5);
-        btns[5] = (Button) findViewById(R.id.quiz6);
-        btns[6] = (Button) findViewById(R.id.quiz7);
-        btns[7] = (Button) findViewById(R.id.quiz8);
-        btns[8] = (Button) findViewById(R.id.quiz9);
-        btns[9] = (Button) findViewById(R.id.quiz10);
-        btns[10] = (Button) findViewById(R.id.quiz11);
-        btns[11] = (Button) findViewById(R.id.quiz12);
-        btns[12] = (Button) findViewById(R.id.quiz13);
-
-        for (int i = 0; i < btns.length - 1; i++) {
-            btns[i].setOnClickListener(new View.OnClickListener() {
+        for (int i = 0; i < buttons.getChildCount() - 1; i++) {
+            Button selectedButton = (Button) buttons.getChildAt(i);
+            week = selectedButton.toString().replace(" ", "");
+            selectedButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent in = new Intent(getApplicationContext(),
-                            ListQuestionsActivity.class);
-                    startActivity(in);
+                    new ChooseQuiz().execute();
                 }
             });
         }
@@ -48,6 +43,42 @@ public class ListQuizzes extends Activity {
         getMenuInflater().inflate(R.menu.list_quizes, menu);
         return true;
 
+    }
+
+    private class ChooseQuiz extends AsyncTask<String, String, JSONObject> {
+        private ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(ListQuizzes.this);
+            pDialog.setMessage("Checking login ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+            // JSONParser parser = new JSONParser();
+            // String newUrl = url + week;
+            JSONObject json = null; // parser.getJSONFromUrl(newUrl);
+            return json;
+
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            pDialog.dismiss();
+            try {
+                Intent in = new Intent(getApplicationContext(),
+                        ListQuestionsActivity.class);
+                startActivity(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
