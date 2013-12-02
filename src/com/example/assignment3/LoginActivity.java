@@ -118,7 +118,7 @@ public class LoginActivity extends Activity {
                     String responseStr = EntityUtils.toString(response
                             .getEntity());
                     Intent in = new Intent(getApplicationContext(),
-                            ListQuizzes.class);
+                            ListQuizzesActivity.class);
                     in.putExtra(TAG_TOKEN, responseStr);
                     startActivity(in);
                 } else {

@@ -35,7 +35,7 @@
             android:label="@string/title_activity_view_score" >
         </activity>
         <activity
-            android:name="com.example.assignment3.ListQuizzes"
+            android:name="com.example.assignment3.ListQuizzesActivity"
             android:label="@string/title_activity_list_quizes" >
         </activity>
     </application>
