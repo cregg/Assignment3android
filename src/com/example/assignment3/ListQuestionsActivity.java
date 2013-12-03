@@ -53,7 +53,7 @@ public class ListQuestionsActivity extends Activity {
     private ViewGroup buttons;
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
-    HashMap<String, String> answerMap = new HashMap<String, String>();
+    HashMap<Integer, Integer> answerMap = new HashMap<Integer, Integer>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
 
@@ -224,6 +224,11 @@ public class ListQuestionsActivity extends Activity {
             JSONObject temp;
             JSONArray n;
 
+            answerMap.put(1, 4);
+            answerMap.put(2, 5);
+            answerMap.put(3, 9);
+            answerMap.put(4, 15);
+            
             try {
                 HttpPost httpPost = new HttpPost(url);
                 temp = new JSONObject();
@@ -231,16 +236,19 @@ public class ListQuestionsActivity extends Activity {
                 json.put(TAG_TOKEN, token);
                 json.put(TAG_USERNAME, userName);
                 temp = new JSONObject();
-                temp.put(TAG_QUIZID, quizID);
-                temp.put(TAG_WEEKNO, weekNo);
+                temp.put(TAG_QUIZID, Integer.parseInt(quizID));
+                temp.put(TAG_WEEKNO, Integer.parseInt(weekNo));
 
                 json.put(TAG_QUIZ, temp);
 
+                System.out.println("iterate map");
                 Iterator it = answerMap.entrySet().iterator();
                 while (it.hasNext()) {
+                	temp = new JSONObject();
                     Map.Entry pairs = (Map.Entry) it.next();
-                    temp.put(TAG_QUESTION, pairs.getKey());
-                    temp.put(TAG_ANSWER, pairs.getValue());
+                    temp.put(TAG_QUESTIONID, pairs.getKey());
+                    temp.put(TAG_ANSWERID, pairs.getValue());
+                    temp.put(TAG_ANSWER, "howw old"); 
                     n.put(temp);
                 }
                 json.put(TAG_ANSWERS, n);
@@ -248,6 +256,8 @@ public class ListQuestionsActivity extends Activity {
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                         "application/json"));
                 httpPost.setEntity(se);
+                System.out.println(json.toString());
+              
                 response = httpClient.execute(httpPost);
                 return response;
             } catch (Exception e) {
