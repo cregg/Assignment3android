@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -43,8 +42,8 @@ public class ListQuestionsActivity extends Activity {
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
     HashMap<String, String> answerMap = new HashMap<String, String>();
-    
-	private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
+
+    private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
 
     private static final String TAG_QUIZ = "quiz";
     private static final String TAG_QUIZID = "quizID";
@@ -83,14 +82,11 @@ public class ListQuestionsActivity extends Activity {
 
         System.out.println(list.getChildCount());
         /*
-        for (int i = 0; i < list.getChildCount(); i++) {
-            if (list.getChildAt(i) instanceof RadioGroup) {
-                tyorke = (RadioGroup) list.getChildAt(i);
-                int id = tyorke.getCheckedRadioButtonId();
-                RadioButton rb = (RadioButton) findViewById(id);
-            }
-        }
-	*/
+         * for (int i = 0; i < list.getChildCount(); i++) { if
+         * (list.getChildAt(i) instanceof RadioGroup) { tyorke = (RadioGroup)
+         * list.getChildAt(i); int id = tyorke.getCheckedRadioButtonId();
+         * RadioButton rb = (RadioButton) findViewById(id); } }
+         */
         submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -182,40 +178,40 @@ public class ListQuestionsActivity extends Activity {
 
         @Override
         protected HttpResponse doInBackground(String... args) {
-			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse response;
-			JSONObject json = new JSONObject();
-	        JSONObject temp;
-	        JSONArray n;
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response;
+            JSONObject json = new JSONObject();
+            JSONObject temp;
+            JSONArray n;
 
-			try {
-				HttpPost httpPost = new HttpPost(url);
-	                temp = new JSONObject();
-	                n = new JSONArray();
-	                temp = new JSONObject();
-	                temp.put(TAG_QUIZID, quizID);
-	                temp.put(TAG_WEEKNO, weekNo);
-	              
-	                json.put(TAG_QUIZ, temp);
-	                
-	                Iterator it = answerMap.entrySet().iterator();
-	                while(it.hasNext()) {
-	                	Map.Entry pairs = (Map.Entry)it.next();
-	                	temp.put(TAG_QUESTION, pairs.getKey());
-	                	temp.put(TAG_ANSWER, pairs.getValue());
-	                	n.put(temp);
-	                }
-	                json.put(TAG_ANSWERS, n);
-				StringEntity se = new StringEntity(json.toString());
-				se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-						"application/json"));
-				httpPost.setEntity(se);
-				response = httpClient.execute(httpPost);
-				return response;
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
-			return null;
+            try {
+                HttpPost httpPost = new HttpPost(url);
+                temp = new JSONObject();
+                n = new JSONArray();
+                temp = new JSONObject();
+                temp.put(TAG_QUIZID, quizID);
+                temp.put(TAG_WEEKNO, weekNo);
+
+                json.put(TAG_QUIZ, temp);
+
+                Iterator it = answerMap.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pairs = (Map.Entry) it.next();
+                    temp.put(TAG_QUESTION, pairs.getKey());
+                    temp.put(TAG_ANSWER, pairs.getValue());
+                    n.put(temp);
+                }
+                json.put(TAG_ANSWERS, n);
+                StringEntity se = new StringEntity(json.toString());
+                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+                        "application/json"));
+                httpPost.setEntity(se);
+                response = httpClient.execute(httpPost);
+                return response;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
 
         }
 
@@ -228,7 +224,6 @@ public class ListQuestionsActivity extends Activity {
                             .getEntity());
                     Intent in = new Intent(getApplicationContext(),
                             ViewScoreActivity.class);
-                    in.putExtra(TAG_TOKEN, responseStr);
                     startActivity(in);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error",
