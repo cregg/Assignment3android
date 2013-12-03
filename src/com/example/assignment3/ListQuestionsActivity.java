@@ -25,29 +25,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * Activity class which displays the questions and their answers.
- * 
- * @author craigleclair/Graeme Funk
- * @version 1.0
- */
 public class ListQuestionsActivity extends Activity {
     private ProgressDialog pDialog;
     ListView list;
     private String week;
     private String weekNo;
     private String quizID;
+    private String userName;
+    private String token;
     private ViewGroup buttons;
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
@@ -55,9 +47,6 @@ public class ListQuestionsActivity extends Activity {
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
 
-    /**
-     * These are constants used to access data from out JSON objects.
-     */
     private static final String TAG_QUIZ = "quiz";
     private static final String TAG_QUIZID = "quizID";
     private static final String TAG_WEEKNO = "weekNo";
@@ -71,6 +60,8 @@ public class ListQuestionsActivity extends Activity {
     private static final String TAG_ANSWER4 = "answer4";
     private static final String TAG_QUESTIONID = "questionID";
     private static final String TAG_QUESTION = "question";
+    private static final String TAG_USERNAME = "userName";
+    private static final String TAG_TOKEN = "token";
 
     JSONArray android = null;
     JSONObject json;
@@ -79,6 +70,10 @@ public class ListQuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_questions);
+        
+        userName = getIntent().getStringExtra(TAG_USERNAME);
+        token = getIntent().getStringExtra(TAG_TOKEN);
+        
         try {
             json = new JSONObject(getIntent().getStringExtra("jsonObject"));
             populateView(json);
@@ -87,52 +82,21 @@ public class ListQuestionsActivity extends Activity {
         }
 
         Button submitButton = (Button) findViewById(R.id.submit_answers);
+
+        /**
+         * This gets the id of the checked radio button and then grabs the radio
+         * button. I don't know what you plan to do with it after.
+         */
+
         submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // answerMap = getAnswerMap();
-                // System.out.println(answerMap);
                 new SubmitAnswer().execute();
             }
         });
     }
 
-    /**
-     * Creates a Hash map containing the question string as a key and the answer
-     * string as a value.
-     * 
-     * @return HashMap<Question, Answer>
-     */
-    public HashMap<String, String> getAnswerMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
-        Adapter listAdapter = list.getAdapter();
-        System.out.println(listAdapter.getCount());
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            RelativeLayout v = (RelativeLayout) listAdapter.getView(i, null,
-                    tyorke);
-
-            TextView questionView = (TextView) v.getChildAt(0);
-            String question = (String) questionView.getText();
-            RadioGroup tyorke = (RadioGroup) v.getChildAt(1);
-            System.out.println(tyorke.getChildCount());
-            int answerId = tyorke.getCheckedRadioButtonId();
-            System.out.println(answerId);
-            RadioButton answerButton = (RadioButton) findViewById(answerId);
-            String answer = (String) answerButton.getText();
-
-            map.put(question, answer);
-        }
-
-        return map;
-    }
-
-    /**
-     * This method populates our listview with items described in the
-     * list_member.xml.
-     * 
-     * @param json
-     */
     protected void populateView(JSONObject json) {
         try {
             JSONObject o = json.getJSONObject(TAG_QUIZ);
@@ -195,12 +159,6 @@ public class ListQuestionsActivity extends Activity {
         return true;
     }
 
-    /**
-     * Child class of Async Class. Contains altered methods to fit our needs.
-     * 
-     * @author craigleclair
-     * @version 1.0
-     */
     private class SubmitAnswer extends AsyncTask<String, String, HttpResponse> {
         private ProgressDialog pDialog;
 
@@ -231,6 +189,8 @@ public class ListQuestionsActivity extends Activity {
                 HttpPost httpPost = new HttpPost(url);
                 temp = new JSONObject();
                 n = new JSONArray();
+                json.put(TAG_TOKEN, token);
+                json.put(TAG_USERNAME, userName);
                 temp = new JSONObject();
                 temp.put(TAG_QUIZID, quizID);
                 temp.put(TAG_WEEKNO, weekNo);
@@ -276,7 +236,6 @@ public class ListQuestionsActivity extends Activity {
                 e.printStackTrace();
             }
         }
-
     }
 
 }

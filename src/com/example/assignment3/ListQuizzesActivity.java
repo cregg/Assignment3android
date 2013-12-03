@@ -16,19 +16,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-/**
- * Activity used to display quizzes that the user can take.
- * 
- * @author craigleclair
- * 
- */
 public class ListQuizzesActivity extends Activity {
     ListView list;
-    private String week;
+    private String week1;
+    private String week2;
+    private String week3;
+    private String week4;
+    private String week5;
+    private String week6;
+    private String week7;
+    private String week8;
+    private String week9;
+    private String week10;
+    private String week11;
+    private String week12;
+    private String week13;
+    private String week14;
+    private String userName;
+    private String token;
 
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
+    private static String TAG_USERNAME = "userName";
+    private static String TAG_TOKEN = "token";
 
     JSONArray android = null;
 
@@ -50,63 +61,149 @@ public class ListQuizzesActivity extends Activity {
         Button button12 = (Button) findViewById(R.id.quiz12);
         Button button13 = (Button) findViewById(R.id.quiz13);
         Button button14 = (Button) findViewById(R.id.quiz14);
+        
+        token = getIntent().getStringExtra(TAG_TOKEN);
+        userName = getIntent().getStringExtra(TAG_USERNAME);
 
-        week = getWeekNum(button1);
-        setListener(button1, week);
-        week = getWeekNum(button2);
-        setListener(button2, week);
-        week = getWeekNum(button3);
-        setListener(button3, week);
-        week = getWeekNum(button4);
-        setListener(button4, week);
-        week = getWeekNum(button5);
-        setListener(button5, week);
-        week = getWeekNum(button6);
-        setListener(button6, week);
-        week = getWeekNum(button7);
-        setListener(button7, week);
-        week = getWeekNum(button8);
-        setListener(button8, week);
-        week = getWeekNum(button9);
-        setListener(button9, week);
-        week = getWeekNum(button10);
-        setListener(button10, week);
-        week = getWeekNum(button11);
-        setListener(button11, week);
-        week = getWeekNum(button12);
-        setListener(button12, week);
-        week = getWeekNum(button13);
-        setListener(button13, week);
-        week = getWeekNum(button14);
-        setListener(button14, week);
-    }
-
-    /**
-     * Helper Class. Sets listeners to our buttons.
-     * 
-     * @param b
-     * @param value
-     */
-    private void setListener(Button b, String value) {
-        final String weekNum = value;
-        b.setOnClickListener(new View.OnClickListener() {
+        week1 = button1.getText().toString().substring(5);
+        button1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new ChooseQuiz(weekNum).execute();
+                new ChooseQuiz(week1).execute();
 
             }
         });
-    }
 
-    /**
-     * Helper Class - Gets the week number from each button.
-     * 
-     * @param b
-     * @return
-     */
-    private String getWeekNum(Button b) {
-        return b.getText().toString().substring(5);
+        week2 = button2.getText().toString().substring(5);
+        button2.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week2).execute();
+
+            }
+        });
+
+        week3 = button3.getText().toString().substring(5);
+        button3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week3).execute();
+
+            }
+        });
+
+        week4 = button4.getText().toString().substring(5);
+        button4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week4).execute();
+
+            }
+        });
+
+        week5 = button5.getText().toString().substring(5);
+        button5.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week5).execute();
+
+            }
+        });
+
+        week6 = button6.getText().toString().substring(5);
+        button6.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week6).execute();
+
+            }
+        });
+
+        week7 = button7.getText().toString().substring(5);
+        button7.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week7).execute();
+
+            }
+        });
+
+        week8 = button8.getText().toString().substring(5);
+        button8.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week8).execute();
+
+            }
+        });
+
+        week9 = button9.getText().toString().substring(5);
+        button9.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week9).execute();
+
+            }
+        });
+
+        week10 = button10.getText().toString().substring(5);
+        button10.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week10).execute();
+
+            }
+        });
+
+        week11 = button11.getText().toString().substring(5);
+        button11.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week11).execute();
+
+            }
+        });
+
+        week12 = button12.getText().toString().substring(5);
+        button12.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week12).execute();
+
+            }
+        });
+
+        week13 = button13.getText().toString().substring(5);
+        button13.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week13).execute();
+
+            }
+        });
+
+        week14 = button14.getText().toString().substring(5);
+        button14.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new ChooseQuiz(week14).execute();
+
+            }
+        });
     }
 
     @Override
@@ -153,6 +250,8 @@ public class ListQuizzesActivity extends Activity {
             pDialog.dismiss();
             Intent in = new Intent(getApplicationContext(),
                     ListQuestionsActivity.class);
+            in.putExtra(TAG_TOKEN, token);
+            in.putExtra(TAG_USERNAME, userName);
             in.putExtra("jsonObject", json.toString());
             startActivity(in);
         }
