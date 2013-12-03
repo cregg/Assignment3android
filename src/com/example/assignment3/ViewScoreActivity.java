@@ -3,6 +3,7 @@ package com.example.assignment3;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 /**
  * Class which is used to display the score of a specific quiz which the user
@@ -13,10 +14,23 @@ import android.view.Menu;
  */
 public class ViewScoreActivity extends Activity {
 
+	TextView score;
+	TextView average;
+	private static String TAG_SCORE = "score";
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_score);
+        String response = getIntent().getStringExtra(TAG_SCORE);
+        String[] tokens = response.split(",");
+        
+        score = (TextView) findViewById(R.id.score_result);
+        average = (TextView) findViewById(R.id.avg_result);
+        
+        score.setText(tokens[0] + " / " + tokens[1]);
+        average.setText(tokens[2]);
+        
     }
 
     @Override

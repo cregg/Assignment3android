@@ -72,6 +72,7 @@ public class ListQuestionsActivity extends Activity {
     private static final String TAG_QUESTION = "question";
     private static final String TAG_USERNAME = "userName";
     private static final String TAG_TOKEN = "token";
+    private static final String TAG_SCORE = "score";
 
     JSONArray android = null;
     JSONObject json;
@@ -276,6 +277,7 @@ public class ListQuestionsActivity extends Activity {
                             .getEntity());
                     Intent in = new Intent(getApplicationContext(),
                             ViewScoreActivity.class);
+                    in.putExtra(TAG_SCORE, responseStr);
                     startActivity(in);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error",
