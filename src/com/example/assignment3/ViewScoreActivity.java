@@ -1,9 +1,16 @@
 package com.example.assignment3;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 
+/**
+ * Class which is used to display the score of a specific quiz which the user
+ * has taken
+ * 
+ * @author craigleclair
+ * @version 1.0
+ */
 public class ViewScoreActivity extends Activity {
 
     @Override
