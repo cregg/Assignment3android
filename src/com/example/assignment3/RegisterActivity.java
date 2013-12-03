@@ -23,7 +23,7 @@ import android.widget.Toast;
 /**
  * Activity created to allow a user to register as a student.
  * 
- * @author craigleclair
+ * @author Grame Funk
  * @version 1.0
  */
 public class RegisterActivity extends Activity {

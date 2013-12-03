@@ -15,30 +15,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
- 
+
+/**
+ * 
+ * @author Graeme Funk
+ * 
+ */
 public class JSONParser {
- 
+
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
- 
+
     // constructor
     public JSONParser() {
- 
+
     }
- 
+
     public JSONObject getJSONFromUrl(String url) {
- 
+
         // Making HTTP request
         try {
             // defaultHttpClient
             DefaultHttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(url);
- 
+
             HttpResponse httpResponse = httpClient.execute(httpGet);
             HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();           
- 
+            is = httpEntity.getContent();
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -46,7 +51,7 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-         
+
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "iso-8859-1"), 8);
@@ -60,16 +65,16 @@ public class JSONParser {
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
- 
+
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(json);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
- 
+
         // return JSON String
         return jObj;
- 
+
     }
 }

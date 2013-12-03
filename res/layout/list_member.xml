@@ -18,6 +18,7 @@
         android:text="Test"/>
 
     <RadioGroup
+        android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/question"
@@ -27,25 +28,26 @@
             android:id="@+id/answer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test" />
+            android:text="@string/average"
+            android:checked="true" />
 
         <RadioButton
             android:id="@+id/answer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test" />
+            android:text="@string/average" />
 
         <RadioButton
             android:id="@+id/answer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test" />
+            android:text="@string/average" />
 
         <RadioButton
             android:id="@+id/answer4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test" />
+            android:text="@string/average" />
     </RadioGroup>
 
 </RelativeLayout>

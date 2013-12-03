@@ -20,6 +20,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity used to allow a user to log in to our application.
+ * 
+ * @author Craig LeClair / Graeme Funk
+ * @version 1.0
+ */
 public class LoginActivity extends Activity {
 
     private EditText usernameEdit;
