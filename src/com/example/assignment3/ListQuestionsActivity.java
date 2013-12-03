@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -54,6 +53,8 @@ public class ListQuestionsActivity extends Activity {
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
     HashMap<Integer, Integer> answerMap = new HashMap<Integer, Integer>();
+    HashMap<String, Integer> answerTextId = new HashMap<String, Integer>();
+    HashMap<String, Integer> questionTextId = new HashMap<String, Integer>();
     HashMap<String, String> answerMapString = new HashMap<String, String>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
@@ -89,10 +90,10 @@ public class ListQuestionsActivity extends Activity {
         try {
             json = new JSONObject(getIntent().getStringExtra("jsonObject"));
             populateView(json);
+            populateMaps(json);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         Button submitButton = (Button) findViewById(R.id.submit_answers);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -106,44 +107,92 @@ public class ListQuestionsActivity extends Activity {
     }
 
     /**
-     * Creates a Hash map containing the question string as a key and the answer
-     * string as a value.
+     * This maps an answer to a specific question. Using a map allows for only
+     * one answer to be stored per question.
      * 
-     * @return HashMap<Question, Answer>
+     * @param v
      */
-    public HashMap<String, String> getAnswerMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
-        Adapter listAdapter = list.getAdapter();
-        System.out.println(listAdapter.getCount());
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            RelativeLayout v = (RelativeLayout) listAdapter.getView(i, null,
-                    tyorke);
-
-            TextView questionView = (TextView) v.getChildAt(0);
-            String question = (String) questionView.getText();
-            RadioGroup tyorke = (RadioGroup) v.getChildAt(1);
-            System.out.println(tyorke.getChildCount());
-            int answerId = tyorke.getCheckedRadioButtonId();
-            System.out.println(answerId);
-            RadioButton answerButton = (RadioButton) findViewById(answerId);
-            String answer = (String) answerButton.getText();
-
-            map.put(question, answer);
-        }
-
-        return map;
-    }
-
     public void setClick(View v) {
         RadioButton rb = (RadioButton) v;
         String answer = (String) rb.getText();
         RelativeLayout rl = (RelativeLayout) v.getParent().getParent();
         TextView questionView = (TextView) rl.getChildAt(0);
         String question = (String) questionView.getText();
-        answerMapString.put(question, answer);
+        System.out.println("Question: " + question + "Answer: " + answer);
+        answerMap.put(questionTextId.get(question), answerTextId.get(answer));
 
     }
 
+    /**
+     * Helper Method to populate question and answer maps that contain string of
+     * questions and their IDs
+     * 
+     * @param json
+     */
+    private void populateMaps(JSONObject json) {
+        try {
+            JSONArray array = json.getJSONArray(TAG_QUESTIONS);
+            populateQuestionsMap(array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Populates the questionTextId Map.
+     * 
+     * @param jarray
+     */
+    private void populateQuestionsMap(JSONArray jarray) {
+        JSONObject jQuestion;
+        JSONArray answers;
+        try {
+            for (int i = 0; i < jarray.length(); i++) {
+                jQuestion = jarray.getJSONObject(i);
+
+                int questionId = jQuestion.getInt(TAG_QUESTIONID);
+                String question = jQuestion.getString(TAG_QUESTION);
+                answers = jQuestion.getJSONArray(TAG_ANSWERS);
+                questionTextId.put(question, questionId);
+                System.out.println(questionTextId);
+                populateAnswerMap(answers);
+                System.out.println(answerTextId);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Here's the error");
+        }
+
+    }
+
+    /**
+     * Populates the answerTextId Map.
+     * 
+     * @param array
+     */
+    private void populateAnswerMap(JSONArray array) {
+        JSONObject jAnswer;
+        try {
+            for (int i = 0; i < array.length(); i++) {
+                jAnswer = array.getJSONObject(i);
+                String answer = jAnswer.getString(TAG_ANSWER);
+                int answerId = jAnswer.getInt(TAG_ANSWERID);
+                answerTextId.put(answer, answerId);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Populates our listview.
+     * 
+     * @param json
+     */
     protected void populateView(JSONObject json) {
         try {
             JSONObject o = json.getJSONObject(TAG_QUIZ);
@@ -156,6 +205,7 @@ public class ListQuestionsActivity extends Activity {
             for (int i = 0; i < android.length(); i++) {
                 JSONObject c = android.getJSONObject(i);
                 JSONObject q = c.getJSONObject(TAG_QUESTION);
+
                 String question = q.getString(TAG_QUESTION);
 
                 JSONArray qObject = c.getJSONArray(TAG_ANSWERS);
@@ -232,11 +282,6 @@ public class ListQuestionsActivity extends Activity {
             JSONObject temp;
             JSONArray n;
 
-            answerMap.put(1, 4);
-            answerMap.put(2, 5);
-            answerMap.put(3, 9);
-            answerMap.put(4, 15);
-
             try {
                 HttpPost httpPost = new HttpPost(url);
                 temp = new JSONObject();
@@ -250,6 +295,7 @@ public class ListQuestionsActivity extends Activity {
                 json.put(TAG_QUIZ, temp);
 
                 System.out.println("iterate map");
+                System.out.println(answerMap);
                 Iterator it = answerMap.entrySet().iterator();
                 while (it.hasNext()) {
                     temp = new JSONObject();
@@ -264,7 +310,7 @@ public class ListQuestionsActivity extends Activity {
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                         "application/json"));
                 httpPost.setEntity(se);
-                System.out.println(json.toString());
+                // System.out.println(json.toString());
 
                 response = httpClient.execute(httpPost);
                 return response;
