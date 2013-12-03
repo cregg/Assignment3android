@@ -100,24 +100,27 @@ public class RegisterActivity extends Activity {
             HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response;
             JSONObject json = new JSONObject();
-
-            try {
-                HttpPost httpPost = new HttpPost(url);
-                json.put(TAG_USERNAME, usernameEdit.getText());
-                json.put(TAG_PASSWORD, passwordEdit.getText());
-                json.put(TAG_FIRST, firstNameEdit.getText());
-                json.put(TAG_LAST, lastNameEdit.getText());
-                json.put(TAG_STUDENT_NUMBER, studentNumberEdit.getText());
-                System.out.println("not null");
-                StringEntity se = new StringEntity(json.toString());
-                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-                        "application/json"));
-                httpPost.setEntity(se);
-                response = httpClient.execute(httpPost);
-                return response;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            
+            
+            if(passwordEdit.getText().toString().equals(passwordConfirmEdit.getText().toString())) {
+	            try {
+	                HttpPost httpPost = new HttpPost(url);
+	                json.put(TAG_USERNAME, usernameEdit.getText());
+	                json.put(TAG_PASSWORD, passwordEdit.getText());
+	                json.put(TAG_FIRST, firstNameEdit.getText());
+	                json.put(TAG_LAST, lastNameEdit.getText());
+	                json.put(TAG_STUDENT_NUMBER, studentNumberEdit.getText());
+	                System.out.println("not null");
+	                StringEntity se = new StringEntity(json.toString());
+	                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+	                        "application/json"));
+	                httpPost.setEntity(se);
+	                response = httpClient.execute(httpPost);
+	                return response;
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+            } 
             return null;
         }
 
@@ -125,22 +128,28 @@ public class RegisterActivity extends Activity {
         protected void onPostExecute(HttpResponse response) {
             pDialog.dismiss();
 			// Getting JSON Array from URL
-			try {
-				if (response.getStatusLine().getStatusCode() == 200) {
-					String responseStr = EntityUtils.toString(response
-							.getEntity());
-					Intent in = new Intent(getApplicationContext(),
-							LoginActivity.class);
-					in.putExtra(TAG_TOKEN,  responseStr);
-					in.putExtra(TAG_USERNAME, usernameEdit.getText());
-					startActivity(in);
-				} else {
-					Toast.makeText(getApplicationContext(), "Error",
-							Toast.LENGTH_SHORT).show();
+            if(response == null) {
+    				Toast.makeText(getApplicationContext(), "Passwords must match",
+    						Toast.LENGTH_SHORT).show();
+            }
+            else {
+				try {
+					if (response.getStatusLine().getStatusCode() == 200) {
+						String responseStr = EntityUtils.toString(response
+								.getEntity());
+						Intent in = new Intent(getApplicationContext(),
+								ListQuizzesActivity.class);
+						in.putExtra(TAG_TOKEN,  responseStr);
+						in.putExtra(TAG_USERNAME, usernameEdit.getText());
+						startActivity(in);
+					} else {
+						Toast.makeText(getApplicationContext(), "Error",
+								Toast.LENGTH_SHORT).show();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+            }
 
         }
     }
