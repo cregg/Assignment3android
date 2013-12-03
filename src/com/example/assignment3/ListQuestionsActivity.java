@@ -25,13 +25,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Activity class which displays the questions and their answers.
+ * 
+ * @author craigleclair/Graeme Funk
+ * @version 1.0
+ */
 public class ListQuestionsActivity extends Activity {
     private ProgressDialog pDialog;
     ListView list;
@@ -70,10 +80,10 @@ public class ListQuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_questions);
-        
+
         userName = getIntent().getStringExtra(TAG_USERNAME);
         token = getIntent().getStringExtra(TAG_TOKEN);
-        
+
         try {
             json = new JSONObject(getIntent().getStringExtra("jsonObject"));
             populateView(json);
@@ -95,6 +105,35 @@ public class ListQuestionsActivity extends Activity {
                 new SubmitAnswer().execute();
             }
         });
+    }
+
+    /**
+     * Creates a Hash map containing the question string as a key and the answer
+     * string as a value.
+     * 
+     * @return HashMap<Question, Answer>
+     */
+    public HashMap<String, String> getAnswerMap() {
+        HashMap<String, String> map = new HashMap<String, String>();
+        Adapter listAdapter = list.getAdapter();
+        System.out.println(listAdapter.getCount());
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            RelativeLayout v = (RelativeLayout) listAdapter.getView(i, null,
+                    tyorke);
+
+            TextView questionView = (TextView) v.getChildAt(0);
+            String question = (String) questionView.getText();
+            RadioGroup tyorke = (RadioGroup) v.getChildAt(1);
+            System.out.println(tyorke.getChildCount());
+            int answerId = tyorke.getCheckedRadioButtonId();
+            System.out.println(answerId);
+            RadioButton answerButton = (RadioButton) findViewById(answerId);
+            String answer = (String) answerButton.getText();
+
+            map.put(question, answer);
+        }
+
+        return map;
     }
 
     protected void populateView(JSONObject json) {
