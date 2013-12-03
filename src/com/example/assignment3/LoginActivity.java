@@ -26,6 +26,7 @@ public class LoginActivity extends Activity {
     private EditText passwordEdit;
     private Button Btnlogin;
     private Button Btnregister;
+    private String userName;
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/users/userlogin";
 
@@ -94,6 +95,7 @@ public class LoginActivity extends Activity {
 
                 String username = URLEncoder.encode(usernameEdit.getText()
                         .toString(), "UTF-8");
+                userName = username;
                 String password = URLEncoder.encode(passwordEdit.getText()
                         .toString(), "UTF-8");
 
@@ -120,6 +122,7 @@ public class LoginActivity extends Activity {
                     Intent in = new Intent(getApplicationContext(),
                             ListQuizzesActivity.class);
                     in.putExtra(TAG_TOKEN, responseStr);
+                    in.putExtra(TAG_NAME, userName);
                     startActivity(in);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error",

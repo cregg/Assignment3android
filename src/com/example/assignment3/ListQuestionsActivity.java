@@ -38,6 +38,8 @@ public class ListQuestionsActivity extends Activity {
     private String week;
     private String weekNo;
     private String quizID;
+    private String userName;
+    private String token;
     private ViewGroup buttons;
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
@@ -58,6 +60,8 @@ public class ListQuestionsActivity extends Activity {
     private static final String TAG_ANSWER4 = "answer4";
     private static final String TAG_QUESTIONID = "questionID";
     private static final String TAG_QUESTION = "question";
+    private static final String TAG_USERNAME = "userName";
+    private static final String TAG_TOKEN = "token";
 
     JSONArray android = null;
     JSONObject json;
@@ -66,6 +70,10 @@ public class ListQuestionsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_questions);
+        
+        userName = getIntent().getStringExtra(TAG_USERNAME);
+        token = getIntent().getStringExtra(TAG_TOKEN);
+        
         try {
             json = new JSONObject(getIntent().getStringExtra("jsonObject"));
             populateView(json);
@@ -80,13 +88,6 @@ public class ListQuestionsActivity extends Activity {
          * button. I don't know what you plan to do with it after.
          */
 
-        System.out.println(list.getChildCount());
-        /*
-         * for (int i = 0; i < list.getChildCount(); i++) { if
-         * (list.getChildAt(i) instanceof RadioGroup) { tyorke = (RadioGroup)
-         * list.getChildAt(i); int id = tyorke.getCheckedRadioButtonId();
-         * RadioButton rb = (RadioButton) findViewById(id); } }
-         */
         submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -188,6 +189,8 @@ public class ListQuestionsActivity extends Activity {
                 HttpPost httpPost = new HttpPost(url);
                 temp = new JSONObject();
                 n = new JSONArray();
+                json.put(TAG_TOKEN, token);
+                json.put(TAG_USERNAME, userName);
                 temp = new JSONObject();
                 temp.put(TAG_QUIZID, quizID);
                 temp.put(TAG_WEEKNO, weekNo);

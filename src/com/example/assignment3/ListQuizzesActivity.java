@@ -32,10 +32,14 @@ public class ListQuizzesActivity extends Activity {
     private String week12;
     private String week13;
     private String week14;
+    private String userName;
+    private String token;
 
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
+    private static String TAG_USERNAME = "userName";
+    private static String TAG_TOKEN = "token";
 
     JSONArray android = null;
 
@@ -57,6 +61,9 @@ public class ListQuizzesActivity extends Activity {
         Button button12 = (Button) findViewById(R.id.quiz12);
         Button button13 = (Button) findViewById(R.id.quiz13);
         Button button14 = (Button) findViewById(R.id.quiz14);
+        
+        token = getIntent().getStringExtra(TAG_TOKEN);
+        userName = getIntent().getStringExtra(TAG_USERNAME);
 
         week1 = button1.getText().toString().substring(5);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -243,6 +250,8 @@ public class ListQuizzesActivity extends Activity {
             pDialog.dismiss();
             Intent in = new Intent(getApplicationContext(),
                     ListQuestionsActivity.class);
+            in.putExtra(TAG_TOKEN, token);
+            in.putExtra(TAG_USERNAME, userName);
             in.putExtra("jsonObject", json.toString());
             startActivity(in);
         }
