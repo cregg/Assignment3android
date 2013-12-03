@@ -54,6 +54,7 @@ public class ListQuestionsActivity extends Activity {
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
     HashMap<Integer, Integer> answerMap = new HashMap<Integer, Integer>();
+    HashMap<String, String> answerMapString = new HashMap<String, String>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
 
@@ -94,15 +95,11 @@ public class ListQuestionsActivity extends Activity {
 
         Button submitButton = (Button) findViewById(R.id.submit_answers);
 
-        /**
-         * This gets the id of the checked radio button and then grabs the radio
-         * button. I don't know what you plan to do with it after.
-         */
-
         submitButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                System.out.println(answerMapString);
                 new SubmitAnswer().execute();
             }
         });
@@ -135,6 +132,16 @@ public class ListQuestionsActivity extends Activity {
         }
 
         return map;
+    }
+
+    public void setClick(View v) {
+        RadioButton rb = (RadioButton) v;
+        String answer = (String) rb.getText();
+        RelativeLayout rl = (RelativeLayout) v.getParent().getParent();
+        TextView questionView = (TextView) rl.getChildAt(0);
+        String question = (String) questionView.getText();
+        answerMapString.put(question, answer);
+
     }
 
     protected void populateView(JSONObject json) {
@@ -229,7 +236,7 @@ public class ListQuestionsActivity extends Activity {
             answerMap.put(2, 5);
             answerMap.put(3, 9);
             answerMap.put(4, 15);
-            
+
             try {
                 HttpPost httpPost = new HttpPost(url);
                 temp = new JSONObject();
@@ -245,11 +252,11 @@ public class ListQuestionsActivity extends Activity {
                 System.out.println("iterate map");
                 Iterator it = answerMap.entrySet().iterator();
                 while (it.hasNext()) {
-                	temp = new JSONObject();
+                    temp = new JSONObject();
                     Map.Entry pairs = (Map.Entry) it.next();
                     temp.put(TAG_QUESTIONID, pairs.getKey());
                     temp.put(TAG_ANSWERID, pairs.getValue());
-                    temp.put(TAG_ANSWER, "howw old"); 
+                    temp.put(TAG_ANSWER, "howw old");
                     n.put(temp);
                 }
                 json.put(TAG_ANSWERS, n);
@@ -258,7 +265,7 @@ public class ListQuestionsActivity extends Activity {
                         "application/json"));
                 httpPost.setEntity(se);
                 System.out.println(json.toString());
-              
+
                 response = httpClient.execute(httpPost);
                 return response;
             } catch (Exception e) {
