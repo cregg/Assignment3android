@@ -54,7 +54,6 @@ public class LoginActivity extends Activity {
 
             @Override
             public void onClick(View view) {
-                System.out.println("click");
                 new UserLogin().execute();
             }
         });

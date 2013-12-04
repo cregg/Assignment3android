@@ -1,8 +1,11 @@
 package com.example.assignment3;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -14,23 +17,35 @@ import android.widget.TextView;
  */
 public class ViewScoreActivity extends Activity {
 
-	TextView score;
-	TextView average;
-	private static String TAG_SCORE = "score";
-	
+    TextView score;
+    TextView average;
+    private static String TAG_SCORE = "score";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_score);
         String response = getIntent().getStringExtra(TAG_SCORE);
         String[] tokens = response.split(",");
-        
+
         score = (TextView) findViewById(R.id.score_result);
         average = (TextView) findViewById(R.id.avg_result);
-        
+
         score.setText(tokens[0] + " / " + tokens[1]);
         average.setText(tokens[2]);
-        
+
+        Button button = (Button) findViewById(R.id.back2quizzes);
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(),
+                        ListQuizzesActivity.class);
+                startActivity(in);
+            }
+        });
+
     }
 
     @Override

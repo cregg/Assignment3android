@@ -33,8 +33,7 @@
         android:layout_toRightOf="@id/average_score"
         android:layout_marginLeft="15dp"
         android:layout_alignBottom="@id/average_score"
-        android:textSize="30sp"
-        android:text="95"/>
+        android:textSize="30sp"/>
     
     <TextView 
        	android:id="@+id/score_result"
@@ -43,8 +42,14 @@
         android:layout_toRightOf="@id/average_score"
         android:layout_alignBottom="@id/score"
         android:layout_marginLeft="15dp"
-        android:textSize="30sp"
-        android:text="99"/>
+        android:textSize="30sp"/>
+    
+    <Button 
+        android:id="@+id/back2quizzes"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/return_2_quizzes"/>
     
     
     
