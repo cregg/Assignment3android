@@ -19,13 +19,19 @@ public class ViewScoreActivity extends Activity {
 
     TextView score;
     TextView average;
+    String userName;
+    String token;
     private static String TAG_SCORE = "score";
+    private static final String TAG_USERNAME = "userName";
+    private static final String TAG_TOKEN = "token";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_score);
         String response = getIntent().getStringExtra(TAG_SCORE);
+        userName = getIntent().getStringExtra(TAG_USERNAME);
+        token = getIntent().getStringExtra(TAG_TOKEN);
         String[] tokens = response.split(",");
 
         score = (TextView) findViewById(R.id.score_result);
@@ -42,6 +48,8 @@ public class ViewScoreActivity extends Activity {
             public void onClick(View v) {
                 Intent in = new Intent(getApplicationContext(),
                         ListQuizzesActivity.class);
+                in.putExtra(TAG_USERNAME, userName);
+                in.putExtra(TAG_TOKEN, token);
                 startActivity(in);
             }
         });

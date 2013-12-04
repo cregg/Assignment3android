@@ -337,6 +337,8 @@ public class ListQuestionsActivity extends Activity {
                     Intent in = new Intent(getApplicationContext(),
                             ViewScoreActivity.class);
                     in.putExtra(TAG_SCORE, responseStr);
+                    in.putExtra(TAG_USERNAME, userName);
+                    in.putExtra(TAG_TOKEN, token);
                     startActivity(in);
                 } else {
                     Toast.makeText(getApplicationContext(), "Error",

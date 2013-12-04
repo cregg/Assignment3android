@@ -1,5 +1,6 @@
 package com.example.assignment3;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,6 +28,8 @@ public class ListQuizzesActivity extends Activity {
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
     private static String TAG_USERNAME = "userName";
     private static String TAG_TOKEN = "token";
+    private static String TAG_RESULT = "result";
+    private static final String TAG_SCORE = "score";
 
     JSONArray android = null;
 
@@ -129,23 +132,46 @@ public class ListQuizzesActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             // JSONParser parser = new JSONParser();
-            JSONParser jParser = new JSONParser();
+			JSONParser jParser = new JSONParser();
 
-            // Getting JSON from URL
-            System.out.println(url + currentWeek);
-            JSONObject json = jParser.getJSONFromUrl(url + currentWeek);
-            return json;
+			// Getting JSON from URL
+			System.out.println(url + currentWeek);
+			try {
+				String tokenEnc = URLEncoder.encode(token, "UTF-8");
+				JSONObject json = jParser.getJSONFromUrl(url + currentWeek
+						+ "?token=" + tokenEnc);
+				return json;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
-            pDialog.dismiss();
-            Intent in = new Intent(getApplicationContext(),
-                    ListQuestionsActivity.class);
-            in.putExtra(TAG_TOKEN, token);
-            in.putExtra(TAG_USERNAME, userName);
-            in.putExtra("jsonObject", json.toString());
-            startActivity(in);
+			pDialog.dismiss();
+			try {
+				String str = json.getString(TAG_RESULT);
+				System.out.println(str);
+				System.out.println(str == null);
+				if (str != null) {
+					Intent in = new Intent(getApplicationContext(),
+							ViewScoreActivity.class);
+					in.putExtra(TAG_SCORE, str);
+					in.putExtra(TAG_USERNAME, userName);
+					startActivity(in);
+				}
+				else {
+					Intent in = new Intent(getApplicationContext(),
+							ListQuestionsActivity.class);
+					in.putExtra(TAG_TOKEN, token);
+					in.putExtra(TAG_USERNAME, userName);
+					in.putExtra("jsonObject", json.toString());
+					startActivity(in);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         }
     }
 
