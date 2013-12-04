@@ -132,7 +132,7 @@ public class ListQuestionsActivity extends Activity {
     private void populateMaps(JSONObject json) {
         try {
             JSONArray array = json.getJSONArray(TAG_QUESTIONS);
-            array.length();
+
             populateQuestionsMap(array);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -149,17 +149,19 @@ public class ListQuestionsActivity extends Activity {
         JSONObject jQuestion;
         JSONObject jAnswer;
         JSONArray answers;
+        JSONObject holder;
         try {
             System.out.println(jarray.length());
             for (int i = 0; i < jarray.length(); i++) {
                 jQuestion = jarray.getJSONObject(i);
-                System.out.println("I'm here");
-                String question = jQuestion.getString(TAG_QUESTION);
-                int questionId = jQuestion.getInt(TAG_QUESTIONID);
-                answers = jQuestion.getJSONArray(TAG_ANSWERS);
+                holder = jQuestion.getJSONObject(TAG_QUESTION);
+                String question = holder.getString(TAG_QUESTION);
+                int questionId = holder.getInt(TAG_QUESTIONID);
+
                 System.out.println("After Answers");
                 questionTextId.put(question, questionId);
                 System.out.println(questionTextId);
+                answers = jQuestion.getJSONArray(TAG_ANSWERS);
                 populateAnswerMap(answers);
                 System.out.println(answerTextId);
             }
