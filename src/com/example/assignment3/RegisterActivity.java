@@ -143,7 +143,7 @@ public class RegisterActivity extends Activity {
 						in.putExtra(TAG_USERNAME, usernameEdit.getText());
 						startActivity(in);
 					} else {
-						Toast.makeText(getApplicationContext(), "Error",
+						Toast.makeText(getApplicationContext(), "Username already exists",
 								Toast.LENGTH_SHORT).show();
 					}
 				} catch (Exception e) {

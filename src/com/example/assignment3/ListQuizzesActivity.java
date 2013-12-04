@@ -147,6 +147,7 @@ public class ListQuizzesActivity extends Activity {
 			return null;
         }
 
+        // some code on a method
         @Override
         protected void onPostExecute(JSONObject json) {
 			pDialog.dismiss();
@@ -159,6 +160,7 @@ public class ListQuizzesActivity extends Activity {
 							ViewScoreActivity.class);
 					in.putExtra(TAG_SCORE, str);
 					in.putExtra(TAG_USERNAME, userName);
+					in.putExtra(TAG_TOKEN, token);
 					startActivity(in);
 				}
 				else {
