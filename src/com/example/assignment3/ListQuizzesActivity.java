@@ -133,7 +133,7 @@ public class ListQuizzesActivity extends Activity {
         protected JSONObject doInBackground(String... args) {
             // JSONParser parser = new JSONParser();
 			JSONParser jParser = new JSONParser();
-
+			//new commentsasd
 			// Getting JSON from URL
 			System.out.println(url + currentWeek);
 			try {
@@ -153,8 +153,8 @@ public class ListQuizzesActivity extends Activity {
 			try {
 				String str = json.getString(TAG_RESULT);
 				System.out.println(str);
-				System.out.println(str == null);
-				if (str != null) {
+				System.out.println(str.equals("null"));
+				if (!str.equals("null")) {
 					Intent in = new Intent(getApplicationContext(),
 							ViewScoreActivity.class);
 					in.putExtra(TAG_SCORE, str);
