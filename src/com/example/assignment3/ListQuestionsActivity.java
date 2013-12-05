@@ -23,9 +23,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -58,6 +60,7 @@ public class ListQuestionsActivity extends Activity {
     HashMap<String, String> answerMapString = new HashMap<String, String>();
 
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
+    private static String logout_url = "http://a3-comp3910.rhcloud.com/application/quizzes/logout";
 
     private static final String TAG_QUIZ = "quiz";
     private static final String TAG_QUIZID = "quizID";
@@ -123,6 +126,13 @@ public class ListQuestionsActivity extends Activity {
         System.out.println(">>>>>>>>>" + questionTextId.get(question) + answer); 
 
     }
+    
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	new UserLogout().execute();
+    	return true;
+    }
+
+ 
 
     /**
      * Helper Method to populate question and answer maps that contain string of
@@ -229,6 +239,7 @@ public class ListQuestionsActivity extends Activity {
             e.printStackTrace();
         }
     }
+        
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -326,5 +337,59 @@ public class ListQuestionsActivity extends Activity {
             }
         }
     }
+    private class UserLogout extends AsyncTask<String, String, HttpResponse> {
+        private ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(ListQuestionsActivity.this);
+            pDialog.setMessage("Logging out ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected HttpResponse doInBackground(String... args) {
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpResponse response;
+            JSONObject jsonLogout = new JSONObject();
+            
+	            try {
+	                HttpPost httpPost = new HttpPost(logout_url);
+	                jsonLogout.put(TAG_TOKEN, token);
+	                StringEntity se = new StringEntity(jsonLogout.toString());
+	                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+	                        "application/json"));
+	                httpPost.setEntity(se);
+	                response = httpClient.execute(httpPost);
+	                return response;
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(HttpResponse response) {
+			pDialog.dismiss();
+			try {
+				if (response.getStatusLine().getStatusCode() == 200) {
+					Intent in = new Intent(getApplicationContext(),
+							LoginActivity.class);
+					startActivity(in);
+				}
+				else {
+					System.out.println("something happened");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }
