@@ -52,8 +52,8 @@ public class ListQuestionsActivity extends Activity {
     private ViewGroup buttons;
     private RadioGroup tyorke;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
-    HashMap<Integer, Integer> answerMap = new HashMap<Integer, Integer>();
-    HashMap<String, Integer> answerTextId = new HashMap<String, Integer>();
+    HashMap<Integer, String> answerMap = new HashMap<Integer, String>();
+    // HashMap<String, Integer> answerTextId = new HashMap<String, Integer>();
     HashMap<String, Integer> questionTextId = new HashMap<String, Integer>();
     HashMap<String, String> answerMapString = new HashMap<String, String>();
 
@@ -78,7 +78,7 @@ public class ListQuestionsActivity extends Activity {
 
     JSONArray android = null;
     JSONObject json;
-
+    // on create activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +119,8 @@ public class ListQuestionsActivity extends Activity {
         TextView questionView = (TextView) rl.getChildAt(0);
         String question = (String) questionView.getText();
         System.out.println("Question: " + question + "Answer: " + answer);
-        answerMap.put(questionTextId.get(question), answerTextId.get(answer));
+        answerMap.put(questionTextId.get(question), answer);
+        System.out.println(">>>>>>>>>" + questionTextId.get(question) + answer); 
 
     }
 
@@ -147,8 +148,6 @@ public class ListQuestionsActivity extends Activity {
      */
     private void populateQuestionsMap(JSONArray jarray) {
         JSONObject jQuestion;
-        JSONObject jAnswer;
-        JSONArray answers;
         JSONObject holder;
         try {
             System.out.println(jarray.length());
@@ -157,39 +156,15 @@ public class ListQuestionsActivity extends Activity {
                 holder = jQuestion.getJSONObject(TAG_QUESTION);
                 String question = holder.getString(TAG_QUESTION);
                 int questionId = holder.getInt(TAG_QUESTIONID);
-
+                
                 System.out.println("After Answers");
                 questionTextId.put(question, questionId);
                 System.out.println(questionTextId);
-                answers = jQuestion.getJSONArray(TAG_ANSWERS);
-                populateAnswerMap(answers);
-                System.out.println(answerTextId);
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("Here's the error");
-        }
-
-    }
-
-    /**
-     * Populates the answerTextId Map.
-     * 
-     * @param array
-     */
-    private void populateAnswerMap(JSONArray array) {
-        JSONObject jAnswer;
-        try {
-            for (int i = 0; i < array.length(); i++) {
-                jAnswer = array.getJSONObject(i);
-                String answer = jAnswer.getString(TAG_ANSWER);
-                int answerId = jAnswer.getInt(TAG_ANSWERID);
-                answerTextId.put(answer, answerId);
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
     }
@@ -303,12 +278,14 @@ public class ListQuestionsActivity extends Activity {
                 System.out.println("iterate map");
                 System.out.println(answerMap);
                 Iterator it = answerMap.entrySet().iterator();
+                System.out.println(answerMap.size());
                 while (it.hasNext()) {
                     temp = new JSONObject();
                     Map.Entry pairs = (Map.Entry) it.next();
+                    System.out.println(pairs.getKey() + " : " + pairs.getValue());
                     temp.put(TAG_QUESTIONID, pairs.getKey());
-                    temp.put(TAG_ANSWERID, pairs.getValue());
-                    temp.put(TAG_ANSWER, "howw old");
+                    temp.put(TAG_ANSWER, pairs.getValue());
+                    temp.put(TAG_ANSWERID, 0);
                     n.put(temp);
                 }
                 json.put(TAG_ANSWERS, n);
