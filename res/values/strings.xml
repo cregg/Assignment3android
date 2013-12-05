@@ -37,5 +37,6 @@
     <string name="week13">Week 13</string>
     <string name="week14">Week 14</string>
     <string name="return_2_quizzes">Return to Quizzes</string>
+    <string name="logout">Logout</string>
     
 </resources>
