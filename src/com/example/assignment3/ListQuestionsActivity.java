@@ -54,6 +54,9 @@ public class ListQuestionsActivity extends Activity {
     private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/mark";
     private static String logout_url = "http://a3-comp3910.rhcloud.com/application/quizzes/logout";
 
+    /**
+     * Below are constants used to obtain data from the JSON Object
+     */
     private static final String TAG_QUIZ = "quiz";
     private static final String TAG_QUIZID = "quizID";
     private static final String TAG_WEEKNO = "weekNo";
