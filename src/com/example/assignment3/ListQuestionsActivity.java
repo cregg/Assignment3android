@@ -253,6 +253,9 @@ public class ListQuestionsActivity extends Activity {
 
         }
 
+        /**
+         * Checks the selected answers vs the correct answers.
+         */
         @Override
         protected HttpResponse doInBackground(String... args) {
             HttpClient httpClient = new DefaultHttpClient();
@@ -301,6 +304,9 @@ public class ListQuestionsActivity extends Activity {
         }
 
         @Override
+        /**
+         * Navigates the user to the ViewScore Activity. 
+         */
         protected void onPostExecute(HttpResponse response) {
             pDialog.dismiss();
             try {
