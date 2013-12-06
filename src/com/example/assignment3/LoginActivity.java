@@ -125,7 +125,6 @@ public class LoginActivity extends Activity {
 					Intent in = new Intent(getApplicationContext(),
 							ListQuizzesActivity.class);
 					in.putExtra(TAG_TOKEN, responseStr);
-					in.putExtra(TAG_NAME, userName);
 					startActivity(in);
 				} else {
 					Toast.makeText(getApplicationContext(), "Error",

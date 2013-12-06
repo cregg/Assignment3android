@@ -139,7 +139,6 @@ public class RegisterActivity extends Activity {
 						Intent in = new Intent(getApplicationContext(),
 								ListQuizzesActivity.class);
 						in.putExtra(TAG_TOKEN,  responseStr);
-						in.putExtra(TAG_USERNAME, usernameEdit.getText());
 						startActivity(in);
 					} else {
 						Toast.makeText(getApplicationContext(), "Username already exists",

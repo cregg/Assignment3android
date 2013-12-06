@@ -44,7 +44,6 @@ public class ListQuestionsActivity extends Activity {
     ListView list;
     private String weekNo;
     private String quizID;
-    private String userName;
     private String token;
     ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
     HashMap<Integer, String> answerMap = new HashMap<Integer, String>();
@@ -70,7 +69,6 @@ public class ListQuestionsActivity extends Activity {
     private static final String TAG_ANSWER4 = "answer4";
     private static final String TAG_QUESTIONID = "questionID";
     private static final String TAG_QUESTION = "question";
-    private static final String TAG_USERNAME = "userName";
     private static final String TAG_TOKEN = "token";
     private static final String TAG_SCORE = "score";
 
@@ -83,7 +81,6 @@ public class ListQuestionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_questions);
 
-        userName = getIntent().getStringExtra(TAG_USERNAME);
         token = getIntent().getStringExtra(TAG_TOKEN);
 
         try {
@@ -272,7 +269,6 @@ public class ListQuestionsActivity extends Activity {
                 temp = new JSONObject();
                 n = new JSONArray();
                 json.put(TAG_TOKEN, token);
-                json.put(TAG_USERNAME, userName);
                 temp = new JSONObject();
                 temp.put(TAG_QUIZID, Integer.parseInt(quizID));
                 temp.put(TAG_WEEKNO, Integer.parseInt(weekNo));
@@ -319,7 +315,6 @@ public class ListQuestionsActivity extends Activity {
                     Intent in = new Intent(getApplicationContext(),
                             ViewScoreActivity.class);
                     in.putExtra(TAG_SCORE, responseStr);
-                    in.putExtra(TAG_USERNAME, userName);
                     in.putExtra(TAG_TOKEN, token);
                     startActivity(in);
                 } else {

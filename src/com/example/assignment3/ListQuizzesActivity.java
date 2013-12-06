@@ -29,14 +29,12 @@ import android.widget.Toast;
 public class ListQuizzesActivity extends Activity {
 	ListView list;
 	private String week;
-	private String userName;
 	private String token;
 
 	ArrayList<HashMap<String, String>> oslist = new ArrayList<HashMap<String, String>>();
 
 	private static String url = "http://a3-comp3910.rhcloud.com/application/quizzes/";
 	private static String logout_url = "http://a3-comp3910.rhcloud.com/application/quizzes/logout";
-	private static String TAG_USERNAME = "userName";
 	private static String TAG_TOKEN = "token";
 	private static String TAG_RESULT = "result";
 	private static final String TAG_SCORE = "score";
@@ -63,7 +61,6 @@ public class ListQuizzesActivity extends Activity {
 		Button button14 = (Button) findViewById(R.id.quiz14);
 
 		token = getIntent().getStringExtra(TAG_TOKEN);
-		userName = getIntent().getStringExtra(TAG_USERNAME);
 
 		week = getWeekNum(button1);
 		setListener(button1, week);
@@ -174,14 +171,12 @@ public class ListQuizzesActivity extends Activity {
 					Intent in = new Intent(getApplicationContext(),
 							ViewScoreActivity.class);
 					in.putExtra(TAG_SCORE, str);
-					in.putExtra(TAG_USERNAME, userName);
 					in.putExtra(TAG_TOKEN, token);
 					startActivity(in);
 				} else {
 					Intent in = new Intent(getApplicationContext(),
 							ListQuestionsActivity.class);
 					in.putExtra(TAG_TOKEN, token);
-					in.putExtra(TAG_USERNAME, userName);
 					in.putExtra("jsonObject", json.toString());
 					startActivity(in);
 				}
