@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ListQuizzesActivity extends Activity {
 	ListView list;
@@ -123,6 +124,11 @@ public class ListQuizzesActivity extends Activity {
 		return true;
 	}
 
+	/** 
+	 * Class for handling the Thread for a network call to get a quiz.
+	 * @author Graeme
+	 *
+	 */
 	private class ChooseQuiz extends AsyncTask<String, String, JSONObject> {
 		private ProgressDialog pDialog;
 		private String currentWeek;
@@ -147,9 +153,6 @@ public class ListQuizzesActivity extends Activity {
 		protected JSONObject doInBackground(String... args) {
 			// JSONParser parser = new JSONParser();
 			JSONParser jParser = new JSONParser();
-			// new commentsasd
-			// Getting JSON from URL
-			System.out.println(url + currentWeek);
 			try {
 				String tokenEnc = URLEncoder.encode(token, "UTF-8");
 				JSONObject json = jParser.getJSONFromUrl(url + currentWeek
@@ -167,8 +170,6 @@ public class ListQuizzesActivity extends Activity {
 			pDialog.dismiss();
 			try {
 				String str = json.getString(TAG_RESULT);
-				System.out.println(str);
-				System.out.println(str.equals("null"));
 				if (!str.equals("null")) {
 					Intent in = new Intent(getApplicationContext(),
 							ViewScoreActivity.class);
@@ -236,7 +237,8 @@ public class ListQuizzesActivity extends Activity {
 							LoginActivity.class);
 					startActivity(in);
 				} else {
-					System.out.println("something happened");
+					Toast.makeText(getApplicationContext(), "Error logging out",
+							Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

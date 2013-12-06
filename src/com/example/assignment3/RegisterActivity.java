@@ -110,7 +110,6 @@ public class RegisterActivity extends Activity {
 	                json.put(TAG_FIRST, firstNameEdit.getText());
 	                json.put(TAG_LAST, lastNameEdit.getText());
 	                json.put(TAG_STUDENT_NUMBER, studentNumberEdit.getText());
-	                System.out.println("not null");
 	                StringEntity se = new StringEntity(json.toString());
 	                se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
 	                        "application/json"));
