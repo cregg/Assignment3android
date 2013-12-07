@@ -279,8 +279,6 @@ public class ListQuestionsActivity extends Activity {
                 while (it.hasNext()) {
                     temp = new JSONObject();
                     Map.Entry pairs = (Map.Entry) it.next();
-                    System.out.println(pairs.getKey() + " : "
-                            + pairs.getValue());
                     temp.put(TAG_QUESTIONID, pairs.getKey());
                     temp.put(TAG_ANSWER, pairs.getValue());
                     temp.put(TAG_ANSWERID, 0);
@@ -354,7 +352,6 @@ public class ListQuestionsActivity extends Activity {
             HttpClient httpClient = new DefaultHttpClient();
             HttpResponse response;
             JSONObject jsonLogout = new JSONObject();
-
             try {
                 HttpPost httpPost = new HttpPost(logout_url);
                 jsonLogout.put(TAG_TOKEN, token);

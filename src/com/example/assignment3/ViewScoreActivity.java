@@ -32,7 +32,6 @@ public class ViewScoreActivity extends Activity {
 
 	TextView score;
 	TextView average;
-	String userName;
 	String token;
 	private static String TAG_SCORE = "score";
 	private static final String TAG_TOKEN = "token";
